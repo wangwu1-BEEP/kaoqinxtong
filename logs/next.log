@@ -1,0 +1,67 @@
+
+> smart-attendance@1.0.0 dev /workspace/projects/projects
+> next dev --port 5000
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /pnpm-lock.yaml as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /workspace/projects/projects/pnpm-lock.yaml
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:5000
+- Network:       http://9.97.169.214:5000
+- Environments: .env
+
+✓ Starting...
+✓ Ready in 553ms
+  Using external babel configuration from /workspace/projects/projects/.babelrc
+ GET / 200 in 2.8s (compile: 2.6s, render: 183ms)
+ GET / 200 in 3.3s (compile: 3.1s, render: 139ms)
+ GET /student 200 in 1302ms (compile: 1259ms, render: 43ms)
+ POST /api/sync 200 in 4.3s (compile: 3.1s, render: 1143ms)
+ POST /api/sync 200 in 4.3s (compile: 3.1s, render: 1129ms)
+ GET / 200 in 33ms (compile: 2ms, render: 30ms)
+ POST /api/sync 200 in 561ms (compile: 1855µs, render: 559ms)
+ POST /api/sync 200 in 670ms (compile: 1957µs, render: 668ms)
+ GET /registration 200 in 526ms (compile: 473ms, render: 53ms)
+ GET /registration 200 in 36ms (compile: 3ms, render: 33ms)
+ GET /api/sync 405 in 5ms (compile: 2ms, render: 3ms)
+ GET /api/sync 405 in 5ms (compile: 3ms, render: 3ms)
+ GET /registration 200 in 34ms (compile: 3ms, render: 32ms)
+ GET /student 200 in 64ms (compile: 1965µs, render: 62ms)
+ POST /api/sync 200 in 1457ms (compile: 1951µs, render: 1455ms)
+ POST /api/sync 200 in 422ms (compile: 1819µs, render: 420ms)
+ GET /checkin 200 in 457ms (compile: 386ms, render: 72ms)
+ POST /api/face/detect 200 in 194ms (compile: 119ms, render: 76ms)
+ POST /api/face/detect 200 in 34ms (compile: 1842µs, render: 32ms)
+ POST /api/face/detect 200 in 42ms (compile: 1749µs, render: 40ms)
+ POST /api/face/detect 200 in 32ms (compile: 1835µs, render: 30ms)
+ POST /api/face/detect 200 in 34ms (compile: 1996µs, render: 32ms)
+ POST /api/face/detect 200 in 31ms (compile: 1956µs, render: 29ms)
+ POST /api/face/detect 200 in 30ms (compile: 1866µs, render: 28ms)
+ POST /api/face/detect 200 in 31ms (compile: 1635µs, render: 29ms)
+ POST /api/face/detect 200 in 41ms (compile: 1769µs, render: 39ms)
+ POST /api/face/detect 200 in 38ms (compile: 1824µs, render: 36ms)
+ POST /api/face/verify 200 in 272ms (compile: 96ms, render: 177ms)
+ POST /api/face/detect 200 in 34ms (compile: 1727µs, render: 32ms)
+ POST /api/face/detect 200 in 90ms (compile: 3ms, render: 87ms)
+ POST /api/face/detect 200 in 39ms (compile: 1709µs, render: 37ms)
+ POST /api/face/detect 200 in 72ms (compile: 1674µs, render: 71ms)
+ POST /api/face/detect 200 in 36ms (compile: 3ms, render: 33ms)
+ POST /api/face/verify 200 in 178ms (compile: 1556µs, render: 176ms)
+ POST /api/face/detect 200 in 31ms (compile: 1643µs, render: 30ms)
+ POST /api/face/verify 200 in 186ms (compile: 1509µs, render: 185ms)
+ POST /api/face/detect 200 in 47ms (compile: 1567µs, render: 46ms)
+ POST /api/face/detect 200 in 43ms (compile: 2ms, render: 41ms)
+ POST /api/face/detect 200 in 45ms (compile: 1851µs, render: 44ms)
+ POST /api/face/detect 200 in 48ms (compile: 3ms, render: 45ms)
+ POST /api/face/detect 200 in 35ms (compile: 1723µs, render: 34ms)
+ GET /student 200 in 33ms (compile: 4ms, render: 30ms)
+ POST /api/sync 200 in 1116ms (compile: 2ms, render: 1114ms)
+ POST /api/sync 200 in 551ms (compile: 1946µs, render: 549ms)
+ GET /login 200 in 614ms (compile: 542ms, render: 71ms)
+[sync API] Error: 查询班级失败: Could not find the table 'public.classes' in the schema cache
+ POST /api/sync 500 in 446ms (compile: 1995µs, render: 444ms)
+✓ Compiled in 265ms

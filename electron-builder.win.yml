@@ -1,0 +1,54 @@
+appId: com.smartattendance.app
+productName: 智能考勤系统
+copyright: Copyright © 2024
+
+directories:
+  output: dist-electron
+  buildResources: build
+
+files:
+  - dist/**/*
+  - standalone/**/*
+  - python/**/*
+  - "!**/*.map"
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+
+extraResources:
+  - from: python
+    to: python
+    filter:
+      - "**/*"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+  artifactName: ${productName}-Setup-${version}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  installerHeaderIcon: build/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 智能考勤系统
+  include: build/installer.nsh
+
+mac:
+  category: public.app-category.education
+  target:
+    - dmg
+  icon: build/icon.icns
+
+linux:
+  category: Education
+  target:
+    - AppImage
+  icon: build/icon.png
+
+publish: null

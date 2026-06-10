@@ -1,0 +1,19 @@
+[project]
+sub_id = "a1b2c3d4"
+name = "smart-attendance"
+requires = ["nodejs-24"]
+project_type = "web"
+
+[preview]
+preview_enable = "enabled"
+
+[dev]
+build = ["bash", "./scripts/prepare.sh"]
+run = ["bash", "./scripts/dev.sh"]
+validate = ["bash", "./scripts/validate.sh"]
+deps = ["git"]
+
+[deploy]
+build = ["bash", "./scripts/build.sh"]
+run = ["bash", "./scripts/start.sh"]
+deps = ["git"]

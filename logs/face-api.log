@@ -1,0 +1,46 @@
+INFO:__main__:DNN SSD人脸检测模型加载成功
+INFO:__main__:Haar Cascade加载成功
+INFO:__main__:==================================================
+INFO:__main__:人脸识别服务启动
+INFO:__main__:OpenCV版本: 4.13.0
+INFO:__main__:DNN检测: 已加载
+INFO:__main__:Haar检测: 已加载
+INFO:__main__:验证阈值: 75.0
+INFO:__main__:唯一性阈值: 60.0
+INFO:__main__:数据目录: /workspace/projects/projects/python-face/face_data
+INFO:__main__:==================================================
+ * Serving Flask app 'face_api'
+ * Debug mode: off
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://169.254.106.55:5001
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:04:51] "GET /api/face/health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:24] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:25] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:28] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:30] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:32] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:33] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:36] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:37] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:40] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:42] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:__main__:验证: 用户=user-1780329010438, 本人confidence=86.02, 他人最小confidence=69.19(王晶晶)
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:43] "POST /api/face/verify HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:43] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:46] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:47] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:50] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:52] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:__main__:验证: 用户=user-1780329010438, 本人confidence=75.25, 他人最小confidence=71.61(王晶晶)
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:53] "POST /api/face/verify HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:55] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:__main__:验证: 用户=user-1780329010438, 本人confidence=73.89, 他人最小confidence=72.55(王晶晶)
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:56] "POST /api/face/verify HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:05:58] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:06:00] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:06:02] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:06:04] "POST /api/face/detect HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [02/Jun/2026 01:06:05] "POST /api/face/detect HTTP/1.1" 200 -

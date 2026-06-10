@@ -1,0 +1,218 @@
+{
+  "face_embeddings": {
+    "user-1780232251310": {
+      "username": "王丽丽",
+      "name": "王丽丽",
+      "sampleCount": 5,
+      "registeredAt": "2026-05-31T14:16:11"
+    },
+    "stu-1780285968022": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T04:27:01"
+    },
+    "user-1780288543008": {
+      "username": "王丽丽",
+      "name": "王丽丽",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T08:38:55"
+    },
+    "stu-1780303635046": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T08:47:53"
+    },
+    "user-1780304748508": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:06:00"
+    },
+    "user-1780305246388": {
+      "username": "王静茹",
+      "name": "王静茹",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:14:28"
+    },
+    "user-1780305773741": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:23:03"
+    },
+    "user-1780306122460": {
+      "username": "赵文娟",
+      "name": "赵文娟",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:29:00"
+    },
+    "user-1780306560497": {
+      "username": "王静茹",
+      "name": "王静茹",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:36:31"
+    },
+    "user-1780307865756": {
+      "username": "王天娇",
+      "name": "wangtianjiao",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T09:58:04"
+    },
+    "user-1780308097096": {
+      "username": "王静茹",
+      "name": "王静茹",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T10:01:47"
+    },
+    "user-1780324723038": {
+      "username": "王天",
+      "name": "王天",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T14:55:01"
+    },
+    "user-1780325850655": {
+      "username": "王晶晶",
+      "name": "王晶晶",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T14:57:58"
+    },
+    "user-1780326914121": {
+      "username": "王碧",
+      "name": "王碧",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T15:19:27"
+    },
+    "user-1780327243883": {
+      "username": "王碧",
+      "name": "王碧",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T15:21:01"
+    },
+    "user-1780330282251": {
+      "username": "王天",
+      "name": "王天",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:19:13"
+    },
+    "user-1780356621501": {
+      "username": "王天",
+      "name": "王天",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:30:30"
+    },
+    "user-1780356850587": {
+      "username": "王天",
+      "name": "王天",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:34:19"
+    },
+    "user-1780357094412": {
+      "username": "王海",
+      "name": "王海",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:38:24"
+    },
+    "user-1780357247619": {
+      "username": "王烟",
+      "name": "王海汉",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:41:01"
+    },
+    "user-1780357649694": {
+      "username": "王海还",
+      "name": "王海还",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:47:39"
+    },
+    "user-1780358282879": {
+      "username": "王佳音",
+      "name": "王佳音",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-01T23:58:13"
+    },
+    "user-1780359290038": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T00:22:51"
+    },
+    "user-1780359852009": {
+      "username": "王天娇",
+      "name": "王天娇 ",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T00:24:19"
+    },
+    "stu-1780360717973": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T00:39:10"
+    },
+    "stu-1780361538192": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T00:53:38"
+    },
+    "user-1780361728279": {
+      "username": "王五",
+      "name": "王五",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T00:55:41"
+    },
+    "stu-1780362156366": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T01:04:34"
+    },
+    "stu-1780363087924": {
+      "username": "王天娇",
+      "name": "王天娇",
+      "sampleCount": 5,
+      "registeredAt": "2026-06-02T01:27:14"
+    }
+  },
+  "students": [],
+  "app_config": {
+    "face_verify_threshold": "50",
+    "face_unique_threshold": "35",
+    "face_model_type": "lbph"
+  },
+  "export_time": "2026-06-08 19:31:18.890603",
+  "model_files": [
+    "stu-1780285968022.yml",
+    "stu-1780360717973.yml",
+    "user-1780356850587.yml",
+    "user-1780307865756.yml",
+    "user-1780306122460.yml",
+    "user-1780324723038.yml",
+    "stu-1780363087924.yml",
+    "user-1780359290038.yml",
+    "user-1780308097096.yml",
+    "user-1780361728279.yml",
+    "user-1780356621501.yml",
+    "user-1780326914121.yml",
+    "user-1780359852009.yml",
+    "user-1780358282879.yml",
+    "user-1780304748508.yml",
+    "stu-1780303635046.yml",
+    "user-1780305773741.yml",
+    "stu-1780361538192.yml",
+    "user-1780306560497.yml",
+    "stu-1780362156366.yml",
+    "user-1780357649694.yml",
+    "user-b.yml",
+    "user-1780325850655.yml",
+    "user-1780357247619.yml",
+    "user-1780357094412.yml",
+    "user-1780305246388.yml",
+    "user-1780330282251.yml",
+    "user-1780288543008.yml",
+    "user-1780232251310.yml",
+    "user-1780327243883.yml",
+    "user-a.yml"
+  ]
+}
