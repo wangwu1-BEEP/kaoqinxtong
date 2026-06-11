@@ -13,7 +13,7 @@ export default function AutoStartService() {
 
   const checkServices = async () => {
     try {
-      const faceRes = await fetch('http://117.72.39.218:5000/api/face/health', {
+      const faceRes = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/health', {
         method: 'GET',
         signal: AbortSignal.timeout(3000),
       });
