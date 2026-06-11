@@ -36,6 +36,7 @@ export default function RegistrationPage() {
   };
 
   const handleFaceComplete = (result?: { success: boolean; message?: string }) => {
+    console.log('[handleFaceComplete] 被调用, result:', result);
     if (!user) {
       alert('用户信息无效，请重新登录');
       return;
@@ -44,12 +45,15 @@ export default function RegistrationPage() {
       alert(result?.message || '人脸注册失败，请重试');
       return;
     }
+    console.log('[handleFaceComplete] 开始处理注册状态');
     let success = false;
     if (user.id) {
       success = updateStudentRegistrationById(user.id, 'face');
+      console.log('[handleFaceComplete] updateStudentRegistrationById:', success);
     }
     if (!success) {
       success = updateStudentRegistration(user.username, 'face');
+      console.log('[handleFaceComplete] updateStudentRegistration:', success);
     }
     if (success) {
       const message = result?.message || '人脸注册成功！';
@@ -60,6 +64,7 @@ export default function RegistrationPage() {
     } else {
       console.error('[handleFaceComplete] 人脸注册失败');
     }
+    console.log('[handleFaceComplete] 准备切换到status步骤');
     setStep('status');
     setRefreshKey(k => k + 1);
   };

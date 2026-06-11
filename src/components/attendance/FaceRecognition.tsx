@@ -196,14 +196,20 @@ export default function FaceRecognition({
 
   // 注册人脸
   const handleRegister = useCallback(async () => {
-    if (isProcessingRef.current) return;
+    console.log('[handleRegister] 开始执行');
+    if (isProcessingRef.current) {
+      console.log('[handleRegister] 已经在处理中，跳过');
+      return;
+    }
     isProcessingRef.current = true;
     setIsProcessing(true);
     setCheckingStatus('正在采集人脸图像...');
     setLastResult(null);
 
     const user = getCurrentUser();
+    console.log('[handleRegister] 当前用户:', user);
     if (!user) {
+      console.log('[handleRegister] 用户不存在');
       setLastResult({ success: false, message: '未找到用户信息，请重新登录' });
       isProcessingRef.current = false;
       setIsProcessing(false);
@@ -212,8 +218,11 @@ export default function FaceRecognition({
 
     try {
       // 采集5帧图像
+      console.log('[handleRegister] 开始采集5帧图像');
       const images = await captureMultipleFrames(5, 200);
+      console.log('[handleRegister] 采集完成，图像数量:', images.length);
       if (images.length < 3) {
+        console.log('[handleRegister] 图像采集不足');
         setLastResult({ success: false, message: '人脸采集失败，请确保正面对着摄像头，光线充足' });
         isProcessingRef.current = false;
         setIsProcessing(false);
@@ -221,6 +230,7 @@ export default function FaceRecognition({
       }
 
       setCheckingStatus('正在注册人脸...');
+      console.log('[handleRegister] 保存到localStorage');
 
       // 直接保存到本地存储，不再依赖云端
       const userData = {
@@ -233,13 +243,18 @@ export default function FaceRecognition({
       
       localStorage.setItem(`face_${user.id}`, JSON.stringify(userData));
       
+      console.log('[handleRegister] 注册成功，准备调用回调');
       setLastResult({ success: true, message: '人脸注册成功！' });
       
       // 直接调用回调，让父组件处理跳转
       if (onRecognitionComplete) {
+        console.log('[handleRegister] 调用 onRecognitionComplete');
         onRecognitionComplete({ success: true, message: '人脸注册成功' });
+      } else {
+        console.log('[handleRegister] onRecognitionComplete 不存在');
       }
     } catch (err) {
+      console.error('[handleRegister] 发生异常:', err);
       setLastResult({
         success: false,
         message: '注册失败: ' + (err instanceof Error ? err.message : String(err)),
