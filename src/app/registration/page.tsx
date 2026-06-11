@@ -53,12 +53,12 @@ export default function RegistrationPage() {
     }
     if (success) {
       const message = result?.message || '人脸注册成功！';
-      alert(message);
+      console.log('[handleFaceComplete]', message);
       syncRegistrationStatus(user.id, { face_registered: true }).catch(err =>
         console.error('[handleFaceComplete] 同步云端失败:', err)
       );
     } else {
-      alert('人脸注册状态更新失败，请刷新页面重试');
+      console.error('[handleFaceComplete] 人脸注册失败');
     }
     setStep('status');
     setRefreshKey(k => k + 1);

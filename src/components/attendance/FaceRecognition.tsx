@@ -228,9 +228,18 @@ export default function FaceRecognition({
       localStorage.setItem(`face_${user.id}`, JSON.stringify(userData));
       
       setLastResult({ success: true, message: '人脸注册成功！' });
-      if (onRecognitionComplete) {
-        onRecognitionComplete({ success: true, message: '人脸注册成功' });
-      }
+      // 注册成功后，3秒后自动切换到状态页面
+      setTimeout(() => {
+        if (onRecognitionComplete) {
+          onRecognitionComplete({ success: true, message: '人脸注册成功' });
+        }
+      }, 1500);
+      // 同时触发父组件的跳转
+      setTimeout(() => {
+        const event = new CustomEvent('faceRegistrationComplete', { detail: { success: true } });
+        window.dispatchEvent(event);
+      }, 2000);
+    } catch (err) {
     } catch (err) {
       setLastResult({
         success: false,
