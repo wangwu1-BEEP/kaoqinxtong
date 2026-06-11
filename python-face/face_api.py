@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 # ====== 配置 ======
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FACE_DATA_DIR = os.environ.get('FACE_DATA_DIR', os.path.join(BASE_DIR, 'face_data'))
+FACE_DATA_DIR = os.path.join(BASE_DIR, 'face_data')
 MODELS_DIR = os.path.join(FACE_DATA_DIR, 'models')
 META_FILE = os.path.join(FACE_DATA_DIR, 'meta.json')
 
@@ -38,9 +38,9 @@ LBPH_NEIGHBORS = 8
 LBPH_GRID_X = 8
 LBPH_GRID_Y = 8
 
-# 阈值配置（从环境变量读取，默认值）
-VERIFY_THRESHOLD = float(os.environ.get('VERIFY_THRESHOLD', '50.0'))      # 验证阈值
-UNIQUENESS_THRESHOLD = float(os.environ.get('UNIQUENESS_THRESHOLD', '35.0'))  # 唯一性检查阈值
+# 阈值配置（LBPH confidence：越低表示越相似）
+VERIFY_THRESHOLD = 50.0      # 验证阈值：distance < 50 才通过本人验证
+UNIQUENESS_THRESHOLD = 35.0  # 唯一性检查阈值：distance < 35 视为同一人
 FACE_SIZE = 150             # 统一人脸裁剪尺寸
 MIN_SAMPLES = 3             # 注册最少需要3次有效人脸采样
 
