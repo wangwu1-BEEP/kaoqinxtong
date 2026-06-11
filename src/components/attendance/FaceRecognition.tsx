@@ -137,20 +137,26 @@ export default function FaceRecognition({
         console.log('[FaceCheck] 捕获图像:', image ? '成功 (' + image.length + '字节)' : '失败');
         if (!image) return;
 
-        const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image, type: 'detect' }),
-        });
+        const res = await Promise.race([
+          fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image, type: 'detect' }),
+          }),
+          new Promise<Response>((_, reject) => 
+            setTimeout(() => reject(new Error('API超时')), 5000)
+          )
+        ]);
         const data = await res.json();
         console.log('[FaceCheck] API响应:', data);
-        // 云端API响应格式：{success: true, user_id: '...'} 或 {success: false, error: 'No face detected'}
-        const faceDetected = data.success === true && !data.error?.includes('No face');
+        // 云端API响应格式：{success: true, message: 'Face detected'} 或 {success: false, error: 'No face detected'}
+        const faceDetected = data.success === true;
         setDetectedFace(faceDetected);
-      } catch {
-        // 静默忽略
+      } catch (err) {
+        console.log('[FaceCheck] API错误:', err);
+        // API失败时不显示错误，继续检测
       }
-    }, 2000);
+    }, 1000);
   }, []);
 
   // 从摄像头捕获一帧，返回base64
@@ -280,14 +286,43 @@ export default function FaceRecognition({
 
       setCheckingStatus('正在验证人脸...');
 
-      // 直接从本地存储验证
-      const savedFace = localStorage.getItem(`face_${user.id}`);
-      if (!savedFace) {
-        setLastResult({ success: false, message: '请先注册人脸' });
-      } else {
-        setLastResult({ success: true, message: '人脸验证通过！' });
-        if (onRecognitionComplete) {
-          onRecognitionComplete({ success: true, message: '人脸验证通过' });
+      const API_BASE = 'https://applies-citations-cgi-trio.trycloudflare.com';
+
+      // 尝试使用云端API验证
+      try {
+        const response = await Promise.race([
+          fetch(`${API_BASE}/api/recognize`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'verify',
+              image: images[0],
+              userId: user.id
+            }),
+          }),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+        ]);
+
+        const data = await response.json();
+
+        if (data.success) {
+          setLastResult({ success: true, message: '人脸验证通过！' });
+          if (onRecognitionComplete) {
+            onRecognitionComplete({ success: true, message: '人脸验证通过' });
+          }
+        } else {
+          setLastResult({ success: false, message: data.error || '人脸验证失败' });
+        }
+      } catch (err) {
+        // 云端API失败时，检查本地是否已注册
+        const savedFace = localStorage.getItem(`face_${user.id}`);
+        if (savedFace) {
+          setLastResult({ success: true, message: '已注册用户（离线模式）' });
+          if (onRecognitionComplete) {
+            onRecognitionComplete({ success: true, message: '人脸验证通过' });
+          }
+        } else {
+          setLastResult({ success: false, message: '请先注册人脸' });
         }
       }
     } catch (err) {
