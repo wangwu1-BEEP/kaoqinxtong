@@ -133,10 +133,10 @@ export default function FaceRecognition({
         const image = captureFrame();
         if (!image) return;
 
-        const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/face/detect', {
+        const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image }),
+          body: JSON.stringify({ image, type: 'detect' }),
         });
         const data = await res.json();
         setDetectedFace(data.success === true && data.faceDetected === true);
@@ -210,7 +210,7 @@ export default function FaceRecognition({
       setCheckingStatus('正在注册人脸...');
 
       // 发送到后端注册
-      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/face/register', {
+      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -218,6 +218,7 @@ export default function FaceRecognition({
           userId: user.id,
           username: user.username,
           name: user.name,
+          type: 'register',
         }),
       });
 
@@ -273,12 +274,13 @@ export default function FaceRecognition({
       setCheckingStatus('正在验证人脸...');
 
       // 使用第一帧做验证（后端LBPH 1:1比对）
-      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/face/verify', {
+      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           image: images[0],
           userId: user.id,
+          type: 'verify',
         }),
       });
 

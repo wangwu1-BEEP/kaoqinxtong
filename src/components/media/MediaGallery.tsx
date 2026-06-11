@@ -104,42 +104,24 @@ export default function MediaGallery({ userRole, userId: propUserId, userName: p
           throw new Error(`${mediaType === 'video' ? '视频' : '图片'}文件大小超过限制(${limit})，当前${(file.size / 1024 / 1024).toFixed(1)}MB`);
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('type', mediaType);
-        formData.append('title', title || file.name.replace(/\.[^/.]+$/, ''));
-        formData.append('classId', 'class-001');
-        formData.append('uploadedBy', 'teacher');
-        formData.append('uploadedByName', '教师');
-
-        const res = await fetch('/api/media/upload', {
-          method: 'POST',
-          body: formData,
+        // 将文件转为 base64，直接存储到 localStorage
+        const base64Data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
         });
 
-        // Handle non-JSON responses (upstream errors)
-        let data: Record<string, unknown>;
-        try {
-          data = await res.json();
-        } catch {
-          throw new Error(`服务器响应异常(${res.status})，文件可能过大，请尝试较小的文件`);
-        }
-
-        if (!data.success || !data.media) {
-          throw new Error((data.error as string) || '上传失败');
-        }
-
-        const md = data.media as Record<string, string>;
         const mediaRecord: ClassMedia = {
-          id: md.id,
-          classId: md.classId,
-          title: md.title,
-          type: md.type as MediaType,
-          url: md.url,
-          s3Key: md.s3Key,
-          uploadedBy: md.uploadedBy,
-          uploadedByName: md.uploadedByName,
-          createdAt: md.createdAt,
+          id: `media-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          classId: 'class-001',
+          title: title || file.name.replace(/\.[^/.]+$/, ''),
+          type: mediaType,
+          url: base64Data,
+          s3Key: '',
+          uploadedBy: currentUserId || 'teacher',
+          uploadedByName: currentUserName || '教师',
+          createdAt: new Date().toISOString(),
         };
 
         const existingMedia = getMedia();
@@ -158,24 +140,10 @@ export default function MediaGallery({ userRole, userId: propUserId, userName: p
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
-  }, [title, refreshMedia]);
+  }, [title, currentUserId, currentUserName, refreshMedia]);
 
   const handleDelete = useCallback(async (mediaId: string) => {
-    const media = mediaList.find(m => m.id === mediaId);
-    if (!media) return;
-
-    if (media.s3Key) {
-      try {
-        await fetch('/api/media/delete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ s3Key: media.s3Key }),
-        });
-      } catch (err) {
-        console.error('S3 delete error:', err);
-      }
-    }
-
+    // base64 数据不需要调用 S3 删除，直接删除本地记录
     deleteMedia(mediaId);
     setUrlCache(prev => {
       const next = { ...prev };
