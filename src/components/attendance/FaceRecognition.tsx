@@ -139,6 +139,7 @@ export default function FaceRecognition({
           body: JSON.stringify({ image, type: 'detect' }),
         });
         const data = await res.json();
+        console.log('[FaceCheck] API响应:', data);
         setDetectedFace(data.success === true && data.faceDetected === true);
       } catch {
         // 静默忽略
