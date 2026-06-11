@@ -144,7 +144,9 @@ export default function FaceRecognition({
         });
         const data = await res.json();
         console.log('[FaceCheck] API响应:', data);
-        setDetectedFace(data.success === true && data.faceDetected === true);
+        // 云端API响应格式：{success: true, user_id: '...'} 或 {success: false, error: 'No face detected'}
+        const faceDetected = data.success === true && !data.error?.includes('No face');
+        setDetectedFace(faceDetected);
       } catch {
         // 静默忽略
       }
