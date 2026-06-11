@@ -62,8 +62,8 @@ export default function FaceRecognition({
       console.log('[FaceAPI] 开始加载模型 from:', MODEL_URL);
       
       await Promise.all([
-        faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),  // 使用更精确的模型
-        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+        faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL),  // 使用 Tiny 模型
         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
       ]);
       
@@ -74,12 +74,12 @@ export default function FaceRecognition({
       console.error('[FaceAPI] 模型加载失败:', err);
       // 备用：尝试其他 CDN
       try {
-        const FALLBACK_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
+        const FALLBACK_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model';
         console.log('[FaceAPI] 尝试备用 CDN:', FALLBACK_URL);
         
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(FALLBACK_URL),
-          faceapi.nets.faceLandmark68Net.loadFromUri(FALLBACK_URL),
+          faceapi.nets.faceLandmark68TinyNet.loadFromUri(FALLBACK_URL),
           faceapi.nets.faceRecognitionNet.loadFromUri(FALLBACK_URL),
         ]);
         
@@ -149,15 +149,15 @@ export default function FaceRecognition({
     if (!modelsReady) return null;
     
     try {
-      // 使用 SsdMobilenetv1 模型（比 TinyFaceDetector 更精确）
-      const options = new faceapi.SsdMobilenetv1Options({
-        minConfidence: 0.5,  // 最低置信度
-        maxFaces: 1,         // 最多检测1张脸
+      // 使用 TinyFaceDetector（轻量快速）
+      const options = new faceapi.TinyFaceDetectorOptions({
+        inputSize: 512,        // 更大尺寸提高精度
+        scoreThreshold: 0.4,   // 降低阈值提高检出率
       });
       
       const detection = await faceapi
         .detectSingleFace(video, options)
-        .withFaceLandmarks(true)  // 使用68点 landmarks
+        .withFaceLandmarks()
         .withFaceDescriptor();
       
       return detection || null;
