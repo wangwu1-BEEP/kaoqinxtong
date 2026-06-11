@@ -88,7 +88,12 @@ export default function FaceRecognition({
         videoRef.current.srcObject = stream;
         videoRef.current.onloadedmetadata = () => {
           console.log('[Camera] onloadedmetadata触发');
-          videoRef.current?.play();
+          console.log('[Camera] videoWidth:', videoRef.current?.videoWidth, 'videoHeight:', videoRef.current?.videoHeight);
+          videoRef.current?.play().then(() => {
+            console.log('[Camera] 视频播放成功');
+          }).catch(err => {
+            console.error('[Camera] 视频播放失败:', err);
+          });
           setIsCameraReady(true);
           setStatus('摄像头已就绪，正在采集人脸...');
           startFaceCheck();
@@ -172,20 +177,32 @@ export default function FaceRecognition({
   const captureFrame = useCallback((): string | null => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    if (!video || !canvas || video.readyState < 2) return null;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    if (!video || !canvas) {
+      console.log('[captureFrame] video或canvas不存在');
+      return null;
+    }
+    if (video.readyState < 2) {
+      console.log('[captureFrame] video未就绪, readyState:', video.readyState);
+      return null;
+    }
+    
+    // 确保有有效的尺寸
+    const width = video.videoWidth || 640;
+    const height = video.videoHeight || 480;
+    canvas.width = width;
+    canvas.height = height;
+    
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
     // 镜像翻转
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
-    ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0, width, height);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    return canvas.toDataURL('image/jpeg', 0.85);
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+    return dataUrl;
   }, []);
 
   // 捕获多帧图像
