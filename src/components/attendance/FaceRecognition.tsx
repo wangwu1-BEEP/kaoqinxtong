@@ -259,8 +259,11 @@ export default function FaceRecognition({
       if (onRecognitionComplete) {
         console.log('[handleRegister] 调用 onRecognitionComplete');
         onRecognitionComplete({ success: true, message: '人脸注册成功' });
+        // 备用方案：1.5秒后强制刷新
+        setTimeout(() => window.location.reload(), 1500);
       } else {
-        console.log('[handleRegister] onRecognitionComplete 不存在');
+        console.log('[handleRegister] onRecognitionComplete 不存在，强制刷新');
+        setTimeout(() => window.location.reload(), 1000);
       }
     } catch (err) {
       console.error('[handleRegister] 发生异常:', err);
