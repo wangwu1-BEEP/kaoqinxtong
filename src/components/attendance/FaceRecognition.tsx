@@ -80,10 +80,13 @@ export default function FaceRecognition({
           facingMode: 'user'
         }
       });
+      console.log('[Camera] 摄像头授权成功，获取到stream');
       streamRef.current = stream;
       if (videoRef.current) {
+        console.log('[Camera] videoRef存在，设置srcObject');
         videoRef.current.srcObject = stream;
         videoRef.current.onloadedmetadata = () => {
+          console.log('[Camera] onloadedmetadata触发');
           videoRef.current?.play();
           setIsCameraReady(true);
           setStatus('摄像头已就绪，请正面对着摄像头');
