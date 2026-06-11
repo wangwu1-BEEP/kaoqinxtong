@@ -62,7 +62,7 @@ export default function FaceRecognition({
       console.log('[FaceAPI] 开始加载模型 from:', MODEL_URL);
       
       await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+        faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL),  // 使用更精确的模型
         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
       ]);
@@ -149,14 +149,15 @@ export default function FaceRecognition({
     if (!modelsReady) return null;
     
     try {
-      const options = new faceapi.TinyFaceDetectorOptions({
-        inputSize: 320,
-        scoreThreshold: 0.5,
+      // 使用 SsdMobilenetv1 模型（比 TinyFaceDetector 更精确）
+      const options = new faceapi.SsdMobilenetv1Options({
+        minConfidence: 0.5,  // 最低置信度
+        maxFaces: 1,         // 最多检测1张脸
       });
       
       const detection = await faceapi
         .detectSingleFace(video, options)
-        .withFaceLandmarks()
+        .withFaceLandmarks(true)  // 使用68点 landmarks
         .withFaceDescriptor();
       
       return detection || null;
@@ -300,12 +301,20 @@ export default function FaceRecognition({
         return;
       }
 
-      // 使用 faceMatcher 进行比对
-      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptorsRef.current, 0.6);
+      // 使用 faceMatcher 进行比对（阈值越低越严格）
+      const faceMatcher = new faceapi.FaceMatcher(labeledDescriptorsRef.current, 0.4);
       const match = faceMatcher.findBestMatch(detection.descriptor);
       
-      if (match.label !== 'unknown') {
-        setLastResult({ success: true, message: `验证通过: ${match.label}` });
+      // 额外验证：计算描述符的距离
+      const distance = faceapi.euclideanDistance(
+        detection.descriptor,
+        labeledDescriptorsRef.current[0].descriptors[0]
+      );
+      
+      console.log('[FaceAPI] 比对距离:', distance, '阈值: 0.4');
+      
+      if (match.label !== 'unknown' && distance < 0.4) {
+        setLastResult({ success: true, message: `验证通过: ${match.label} (距离:${distance.toFixed(3)})` });
         
         if (onRecognitionComplete) {
           onRecognitionComplete({ success: true, message: '人脸验证通过' });
