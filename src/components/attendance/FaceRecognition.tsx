@@ -53,6 +53,7 @@ export default function FaceRecognition({
   // 摄像头初始化
   useEffect(() => {
     if (!mounted) return;
+    console.log('[Camera] 开始初始化摄像头');
     initCamera();
     return () => {
       stopCamera();
@@ -89,6 +90,7 @@ export default function FaceRecognition({
           console.log('[Camera] onloadedmetadata触发');
           videoRef.current?.play();
           setIsCameraReady(true);
+          console.log('[Camera] 摄像头已就绪，可以点击"注册人脸"按钮');
           setStatus('摄像头已就绪，请正面对着摄像头');
           startFaceCheck();
         };
