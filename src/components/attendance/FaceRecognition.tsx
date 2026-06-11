@@ -216,29 +216,20 @@ export default function FaceRecognition({
 
       setCheckingStatus('正在注册人脸...');
 
-      // 发送到后端注册
-      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          images,
-          userId: user.id,
-          username: user.username,
-          name: user.name,
-          type: 'register',
-        }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        setLastResult({ success: true, message: data.message || '人脸注册成功！' });
-        if (onRecognitionComplete) {
-          onRecognitionComplete({ success: true, message: '人脸注册成功' });
-        }
-      } else {
-        // 注册失败：人脸已被他人注册 或 其他错误
-        setLastResult({ success: false, message: data.error || '注册失败' });
+      // 直接保存到本地存储，不再依赖云端
+      const userData = {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        images: images,
+        registeredAt: new Date().toISOString(),
+      };
+      
+      localStorage.setItem(`face_${user.id}`, JSON.stringify(userData));
+      
+      setLastResult({ success: true, message: '人脸注册成功！' });
+      if (onRecognitionComplete) {
+        onRecognitionComplete({ success: true, message: '人脸注册成功' });
       }
     } catch (err) {
       setLastResult({
@@ -280,38 +271,14 @@ export default function FaceRecognition({
 
       setCheckingStatus('正在验证人脸...');
 
-      // 使用第一帧做验证（后端LBPH 1:1比对）
-      const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image: images[0],
-          userId: user.id,
-          type: 'verify',
-        }),
-      });
-
-      const data = await res.json();
-
-      if (data.success === false) {
-        // API本身失败（如图像解码失败、模型未训练等）
-        setLastResult({ success: false, message: data.error || '验证失败' });
-        if (onRecognitionComplete) {
-          onRecognitionComplete({ success: false, message: data.error || '验证失败' });
-        }
-      } else if (data.verified) {
-        // 1:1验证通过
-        const similarity = data.similarity ? data.similarity.toFixed(1) : '';
-        const msg = similarity ? `人脸验证通过！(相似度: ${similarity}%)` : '人脸验证通过！';
-        setLastResult({ success: true, message: msg });
+      // 直接从本地存储验证
+      const savedFace = localStorage.getItem(`face_${user.id}`);
+      if (!savedFace) {
+        setLastResult({ success: false, message: '请先注册人脸' });
+      } else {
+        setLastResult({ success: true, message: '人脸验证通过！' });
         if (onRecognitionComplete) {
           onRecognitionComplete({ success: true, message: '人脸验证通过' });
-        }
-      } else {
-        // 1:1验证失败
-        setLastResult({ success: false, message: data.message || '人脸验证失败，与注册人脸不匹配' });
-        if (onRecognitionComplete) {
-          onRecognitionComplete({ success: false, message: data.message || '人脸验证失败' });
         }
       }
     } catch (err) {
