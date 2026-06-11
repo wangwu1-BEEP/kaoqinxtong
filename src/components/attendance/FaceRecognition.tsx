@@ -131,6 +131,7 @@ export default function FaceRecognition({
 
       try {
         const image = captureFrame();
+        console.log('[FaceCheck] 捕获图像:', image ? '成功 (' + image.length + '字节)' : '失败');
         if (!image) return;
 
         const res = await fetch('https://applies-citations-cgi-trio.trycloudflare.com/api/recognize', {
