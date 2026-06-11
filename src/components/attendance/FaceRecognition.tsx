@@ -56,8 +56,10 @@ export default function FaceRecognition({
     setStatus('正在加载人脸识别模型...');
     
     try {
-      // 从 CDN 加载模型
-      const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
+      // 使用 jsDelivr CDN（国内访问更快）
+      const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model';
+      
+      console.log('[FaceAPI] 开始加载模型 from:', MODEL_URL);
       
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
@@ -70,7 +72,24 @@ export default function FaceRecognition({
       console.log('[FaceAPI] 模型加载成功');
     } catch (err) {
       console.error('[FaceAPI] 模型加载失败:', err);
-      setStatus('模型加载失败，请刷新重试');
+      // 备用：尝试其他 CDN
+      try {
+        const FALLBACK_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
+        console.log('[FaceAPI] 尝试备用 CDN:', FALLBACK_URL);
+        
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(FALLBACK_URL),
+          faceapi.nets.faceLandmark68Net.loadFromUri(FALLBACK_URL),
+          faceapi.nets.faceRecognitionNet.loadFromUri(FALLBACK_URL),
+        ]);
+        
+        modelsLoaded = true;
+        setModelsReady(true);
+        console.log('[FaceAPI] 备用 CDN 模型加载成功');
+      } catch (err2) {
+        console.error('[FaceAPI] 备用 CDN 也失败:', err2);
+        setStatus('模型加载失败，请检查网络连接');
+      }
     }
     modelsLoading = false;
   }, []);
