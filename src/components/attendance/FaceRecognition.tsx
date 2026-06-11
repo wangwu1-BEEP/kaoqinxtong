@@ -90,9 +90,16 @@ export default function FaceRecognition({
           console.log('[Camera] onloadedmetadata触发');
           videoRef.current?.play();
           setIsCameraReady(true);
-          console.log('[Camera] 摄像头已就绪，可以点击"注册人脸"按钮');
-          setStatus('摄像头已就绪，请正面对着摄像头');
+          setStatus('摄像头已就绪，正在采集人脸...');
           startFaceCheck();
+          
+          // 注册模式：摄像头就绪后自动开始注册
+          if (purpose === 'registration') {
+            console.log('[Camera] 注册模式，2秒后自动开始注册');
+            setTimeout(() => {
+              handleRegister();
+            }, 2000);
+          }
         };
       }
     } catch (err) {
